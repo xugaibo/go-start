@@ -1,10 +1,10 @@
-package api
+package core
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"go-start/bizcode"
-	"go-start/bizerror"
+	"go-start/core/bizcode"
+	"go-start/core/bizerror"
 	"go-start/models/response"
 	"net/http"
 	"runtime"

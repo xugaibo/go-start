@@ -3,7 +3,7 @@ package bizerror
 import (
 	"encoding/json"
 	"errors"
-	"go-start/bizcode"
+	"go-start/core/bizcode"
 )
 
 type BizError struct {

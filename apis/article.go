@@ -2,15 +2,15 @@ package apis
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-start/api"
-	"go-start/db"
+	"go-start/core"
+	"go-start/db/models"
 	"go-start/models/request"
 	"go-start/models/response"
 )
 
 type Article struct {
-	api.Api
-	dao db.ArticleDao
+	core.Api
+	dao models.Article
 }
 
 func (a Article) List(c *gin.Context) {

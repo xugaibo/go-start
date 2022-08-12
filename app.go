@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-start/apis"
-	"go-start/context"
+	"go-start/core/context"
 )
 
 func main() {
@@ -18,5 +19,9 @@ func main() {
 	r.DELETE("/article/:id", api.Delete)
 	r.PUT("/article", api.Update)
 
-	r.Run()
+	err := r.Run()
+	if err != nil {
+		fmt.Println("server start fail")
+		panic(err)
+	}
 }
