@@ -15,7 +15,7 @@ func main() {
 	// apis
 	r.GET("/article", api.List)
 	r.POST("/article", api.Create)
-	r.DELETE("/article", api.Delete)
+	r.DELETE("/article/:id", api.Delete)
 	r.PUT("/article", api.Update)
 
 	r.Run()

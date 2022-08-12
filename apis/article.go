@@ -6,11 +6,11 @@ import (
 	"go-start/db"
 	"go-start/models/request"
 	"go-start/models/response"
-	"net/http"
 )
 
 type Article struct {
 	api.Api
+	dao db.ArticleDao
 }
 
 func (a Article) List(c *gin.Context) {
@@ -20,28 +20,59 @@ func (a Article) List(c *gin.Context) {
 	param := request.ListArticleRequest{}
 	err := c.ShouldBind(&param)
 	if err != nil {
-		a.ClientError("can not parse param")
+		a.ClientError(err)
 		return
 	}
 
-	dao := db.ArticleDao{}
-	r, count := dao.List(&param)
+	r, count := a.dao.List(&param)
 
 	page := response.Page(&r, count, param.PageRequest)
-	c.JSON(http.StatusOK, response.Ok(page))
+
+	a.Success(page)
 }
 
 func (a Article) Create(c *gin.Context) {
-	r := true
-	c.JSON(http.StatusOK, r)
+	defer a.ErrorHandler()
+	a.MakeContext(c)
+
+	param := request.CreateArticleRequest{}
+	err := c.BindJSON(&param)
+	if err != nil {
+		a.ClientError(err)
+		return
+	}
+
+	a.Success(a.dao.Create(param))
 }
 
 func (a Article) Delete(c *gin.Context) {
-	r := true
-	c.JSON(http.StatusOK, r)
+	defer a.ErrorHandler()
+	a.MakeContext(c)
+
+	param := request.IdRequest{}
+	err := c.ShouldBindUri(&param)
+	if err != nil {
+		a.ClientError(err)
+		return
+	}
+
+	a.dao.Delete(param.Id)
+
+	a.Ok()
 }
 
 func (a Article) Update(c *gin.Context) {
-	r := true
-	c.JSON(http.StatusOK, r)
+	defer a.ErrorHandler()
+	a.MakeContext(c)
+
+	param := request.UpdateArticleRequest{}
+	err := c.BindJSON(&param)
+	if err != nil {
+		a.ClientError(err)
+		return
+	}
+
+	a.dao.Update(param)
+
+	a.Ok()
 }

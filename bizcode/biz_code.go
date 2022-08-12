@@ -3,15 +3,17 @@ package bizcode
 type BizCode int
 
 const (
-	Success     BizCode = 0
-	ServerError BizCode = 500
-	ClientError BizCode = 400
+	Success      BizCode = 0
+	ServerError  BizCode = 500
+	ClientError  BizCode = 400
+	DataNotfound BizCode = 4040
 )
 
 var kv = map[BizCode]string{
-	Success:     "success",
-	ServerError: "server error",
-	ClientError: "client error",
+	Success:      "success",
+	ServerError:  "server error",
+	ClientError:  "client error",
+	DataNotfound: "data not found error",
 }
 
 func (b BizCode) String() string {

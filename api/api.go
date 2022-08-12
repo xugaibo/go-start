@@ -14,8 +14,19 @@ type Api struct {
 	Context *gin.Context
 }
 
-func (a *Api) ClientError(message string) {
-	withError := response.NotOk(bizcode.ClientError.Code(), message)
+func (a *Api) Ok() {
+	a.Context.AbortWithStatusJSON(http.StatusOK, response.Ok(true))
+}
+
+func (a *Api) Success(data any) {
+	a.Context.AbortWithStatusJSON(http.StatusOK, response.Ok(data))
+}
+
+func (a *Api) ClientError(err error) {
+	fmt.Println("client error:")
+	fmt.Println(err)
+	fmt.Println(getCurrentGoroutineStack())
+	withError := response.NotOk(bizcode.ClientError.Code(), fmt.Sprint(err))
 	a.Context.AbortWithStatusJSON(http.StatusOK, withError)
 }
 

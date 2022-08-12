@@ -1,9 +1,10 @@
 package models
 
 type Article struct {
-	Id      int32  `json:"id"`
+	Id      uint   `json:"id"`
 	Title   string `json:"title"`
 	Content string `json:"content"`
+	Base
 }
 
 func (Article) TableName() string {

@@ -4,14 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c8467b2-d7c1-487f-8016-4c64e5df8ae9" name="Changes" comment="自定义业务异常处理">
+    <list default="true" id="0c8467b2-d7c1-487f-8016-4c64e5df8ae9" name="Changes" comment=".gitignore add .idea">
+      <change afterPath="$PROJECT_DIR$/db/models/Base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/enums/YesNoEnum.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/request/create_article_request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/request/id_request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/request/update_article_request.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apis/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/apis/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.go" beforeDir="false" afterPath="$PROJECT_DIR$/app.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bizcode/biz_code.go" beforeDir="false" afterPath="$PROJECT_DIR$/bizcode/biz_code.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/article_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/article_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models/arricle.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/models/arricle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response/result_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/response/result_response.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -20,6 +40,33 @@
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/enums" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="go build go-start" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-start" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-start" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build go-start" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -33,6 +80,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="自定义业务异常处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="自定义业务异常处理" />
+    <MESSAGE value=".gitignore add .idea" />
+    <option name="LAST_COMMIT_MESSAGE" value=".gitignore add .idea" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="GoApplicationRunConfiguration">
+        <watch expression="req.GetNeedSearch()" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
