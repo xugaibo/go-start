@@ -48,17 +48,21 @@ func getCurrentGoroutineStack() string {
 
 func (a *Api) ErrorHandler() {
 	if err := recover(); err != nil {
-		fmt.Println("server error:")
-		fmt.Println(err)
-		fmt.Println(getCurrentGoroutineStack())
 		if _, ok := err.(bizerror.BizError); ok {
 			bizError, jsonErr := bizerror.Parse(err)
 			if jsonErr != nil {
 				a.Error(bizerror.Wrap(jsonErr))
 			}
 
+			fmt.Println("biz error:")
+			fmt.Println(err)
+
 			a.Error(*bizError)
 		} else if _, ok := err.(error); ok {
+			fmt.Println("server error:")
+			fmt.Println(err)
+			fmt.Println(getCurrentGoroutineStack())
+
 			a.Error(bizerror.Biz(bizcode.ServerError))
 		}
 	}

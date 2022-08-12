@@ -1,3 +1,5 @@
+create database go_start;
+
 CREATE TABLE `article`
 (
     `id`              bigint unsigned auto_increment comment '自增主键',
