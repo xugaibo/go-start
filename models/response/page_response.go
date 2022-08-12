@@ -10,7 +10,7 @@ type PageResponse struct {
 	Pages      int         `json:"pages"`
 }
 
-func Of(data interface{}, total int64, request request.PageRequest) PageResponse {
+func Page(data interface{}, total int64, request request.PageRequest) PageResponse {
 	response := PageResponse{}
 	response.Total = total
 	response.Data = data

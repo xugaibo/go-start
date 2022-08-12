@@ -20,6 +20,10 @@ func (d ArticleDao) List(req *request.ListArticleRequest) ([]models.Article, int
 
 	var count int64
 	query.Count(&count)
-	query.Limit(req.PageSize).Offset(req.Offset()).Order("id").Find(&result)
+	err := query.Limit(req.PageSize).Offset(req.Offset()).Order("id").Find(&result).Error
+	if err != nil {
+		panic(err)
+	}
+
 	return result, count
 }

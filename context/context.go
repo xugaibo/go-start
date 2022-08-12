@@ -26,7 +26,7 @@ func InitDb() {
 	dsn := "root:123456@tcp(127.0.0.1:3306)/go_start?charset=utf8mb4&parseTime=True&loc=Local"
 	dbGet, err := gorm.Open(mysql.Open(dsn), &gorm.Config{Logger: newLogger})
 	if err != nil {
-		fmt.Println("connect mysql error")
+		fmt.Println("connect mysql bizerror")
 	}
 	Db = dbGet
 }
