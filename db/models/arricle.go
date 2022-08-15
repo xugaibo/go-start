@@ -17,10 +17,6 @@ type Article struct {
 	Base
 }
 
-func (Article) TableName() string {
-	return "article"
-}
-
 func (d Article) List(req *request.ListArticleRequest) ([]Article, int64) {
 	var result []Article
 

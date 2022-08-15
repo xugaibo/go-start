@@ -23,3 +23,10 @@ func NotOk(code int, message string) ResultResponse {
 	response.Message = message
 	return response
 }
+
+func Biz(biz bizcode.BizCode) ResultResponse {
+	response := ResultResponse{}
+	response.Code = biz.Code()
+	response.Message = biz.String()
+	return response
+}

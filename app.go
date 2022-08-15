@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-start/apis"
 	"go-start/core/context"
+	"go-start/middleware"
 )
 
 func main() {
@@ -13,11 +14,19 @@ func main() {
 	r := gin.Default()
 	api := apis.Article{}
 
+	user := apis.User{}
+	r.POST("/user", user.Create)
+
+	token := apis.Token{}
+	r.POST("/token", token.Create)
+
+	r2 := r.Group("/")
+	r2.Use(middleware.CheckLogin())
 	// apis
-	r.GET("/article", api.List)
-	r.POST("/article", api.Create)
-	r.DELETE("/article/:id", api.Delete)
-	r.PUT("/article", api.Update)
+	r2.GET("/article", api.List)
+	r2.POST("/article", api.Create)
+	r2.DELETE("/article/:id", api.Delete)
+	r2.PUT("/article", api.Update)
 
 	err := r.Run()
 	if err != nil {
