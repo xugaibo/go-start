@@ -2,6 +2,7 @@ package context
 
 import (
 	"fmt"
+	logger2 "go-start/core/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -11,6 +12,7 @@ import (
 )
 
 var Db *gorm.DB = nil
+var Log *logger2.Log
 
 func InitDb() {
 	newLogger := logger.New(
@@ -23,10 +25,13 @@ func InitDb() {
 		},
 	)
 
+	Log = logger2.NewLog(newLogger)
+
 	dsn := "root:123456@tcp(127.0.0.1:3306)/go_start?charset=utf8mb4&parseTime=True&loc=Local"
 	dbGet, err := gorm.Open(mysql.Open(dsn), &gorm.Config{Logger: newLogger})
 	if err != nil {
 		fmt.Println("connect mysql bizerror")
+		panic(err)
 	}
 	Db = dbGet
 }

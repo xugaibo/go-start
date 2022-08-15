@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-start/core/bizcode"
 	"go-start/core/bizerror"
+	"go-start/core/context"
 	"go-start/models/response"
 	"net/http"
 	"runtime"
@@ -23,9 +24,8 @@ func (a *Api) Success(data any) {
 }
 
 func (a *Api) ClientError(err error) {
-	fmt.Println("client error:")
-	fmt.Println(err)
-	fmt.Println(getCurrentGoroutineStack())
+	context.Log.Error("client error:", err)
+	context.Log.Error(getCurrentGoroutineStack())
 	withError := response.NotOk(bizcode.ClientError.Code(), fmt.Sprint(err))
 	a.Context.AbortWithStatusJSON(http.StatusOK, withError)
 }
@@ -54,14 +54,11 @@ func (a *Api) ErrorHandler() {
 				a.Error(bizerror.Wrap(jsonErr))
 			}
 
-			fmt.Println("biz error:")
-			fmt.Println(err)
-
+			context.Log.Error("biz error", err)
 			a.Error(*bizError)
 		} else if _, ok := err.(error); ok {
-			fmt.Println("server error:")
-			fmt.Println(err)
-			fmt.Println(getCurrentGoroutineStack())
+			context.Log.Error("server error:", err)
+			context.Log.Error(getCurrentGoroutineStack())
 
 			a.Error(bizerror.Biz(bizcode.ServerError))
 		}
