@@ -5,7 +5,7 @@ import (
 	"go-start/core/bizcode"
 	"go-start/core/bizerror"
 	"go-start/core/context"
-	"go-start/enums"
+	"go-start/core/enums"
 	"go-start/models/request"
 	"gorm.io/gorm"
 )
