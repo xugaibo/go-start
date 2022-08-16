@@ -16,7 +16,7 @@ func (t Token) Create(c *gin.Context) {
 	defer t.ErrorHandler()
 	t.Init(c)
 
-	param := request.CreateTokenRequest{}
+	param := request.CreateToken{}
 	err := c.BindJSON(&param)
 	if err != nil {
 		t.ClientError(err)

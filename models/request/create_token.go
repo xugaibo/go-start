@@ -1,6 +1,6 @@
 package request
 
-type CreateTokenRequest struct {
+type CreateToken struct {
 	UserName string `json:"userName" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }

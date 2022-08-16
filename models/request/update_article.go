@@ -1,6 +1,6 @@
 package request
 
-type UpdateArticleRequest struct {
+type UpdateArticle struct {
 	Id uint `json:"id" binding:"required"`
-	CreateArticleRequest
+	CreateArticle
 }

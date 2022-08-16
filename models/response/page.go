@@ -2,7 +2,7 @@ package response
 
 import "go-start/models/request"
 
-type PageResponse struct {
+type Page struct {
 	Total      int64       `json:"total"`
 	Data       interface{} `json:"data"`
 	PageSize   int         `json:"pageSize"`
@@ -10,8 +10,8 @@ type PageResponse struct {
 	Pages      int         `json:"pages"`
 }
 
-func Page(data interface{}, total int64, request request.PageRequest) PageResponse {
-	response := PageResponse{}
+func NewPage(data interface{}, total int64, request request.Page) Page {
+	response := Page{}
 	response.Total = total
 	response.Data = data
 	response.PageSize = request.PageSize

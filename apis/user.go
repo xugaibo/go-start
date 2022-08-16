@@ -16,7 +16,7 @@ func (u User) Create(c *gin.Context) {
 	defer u.ErrorHandler()
 	u.Init(c)
 
-	param := request.CreateUserRequest{}
+	param := request.CreateUser{}
 	err := c.BindJSON(&param)
 	if err != nil {
 		u.ClientError(err)

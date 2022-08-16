@@ -1,10 +1,10 @@
 package request
 
-type PageRequest struct {
+type Page struct {
 	PageSize   int `form:"pageSize"`
 	PageNumber int `form:"pageNumber"`
 }
 
-func (req PageRequest) Offset() int {
+func (req Page) Offset() int {
 	return (req.PageNumber - 1) * req.PageSize
 }

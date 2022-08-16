@@ -21,7 +21,7 @@ func NewDao(api core.Api) *Dao {
 	return &dao
 }
 
-func (d *Dao) List(req *request.ListArticleRequest) ([]Article, int64) {
+func (d *Dao) List(req *request.ListArticle) ([]Article, int64) {
 	var result []Article
 
 	query := d.Db.Debug().Model(Article{})
@@ -47,7 +47,7 @@ func (d *Dao) List(req *request.ListArticleRequest) ([]Article, int64) {
 	return result, count
 }
 
-func (d *Dao) Create(param request.CreateArticleRequest) uint {
+func (d *Dao) Create(param request.CreateArticle) uint {
 	m := Article{}
 	m.Content = param.Content
 	m.Title = param.Title
@@ -65,7 +65,7 @@ func (d *Dao) Delete(id uint) {
 	}
 }
 
-func (d *Dao) Update(param request.UpdateArticleRequest) {
+func (d *Dao) Update(param request.UpdateArticle) {
 	one := d.FindOne(param.Id)
 	if one == nil {
 		panic(bizerror.Biz(bizcode.DataNotfound))

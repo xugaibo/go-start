@@ -1,5 +1,5 @@
 package request
 
-type IdRequest struct {
+type Id struct {
 	Id uint `uri:"id" binding:"required"`
 }

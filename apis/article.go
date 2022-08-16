@@ -16,7 +16,7 @@ func (a Article) List(c *gin.Context) {
 	defer a.ErrorHandler()
 	a.Init(c)
 
-	param := request.ListArticleRequest{}
+	param := request.ListArticle{}
 	err := c.ShouldBind(&param)
 	if err != nil {
 		a.ClientError(err)
@@ -26,7 +26,7 @@ func (a Article) List(c *gin.Context) {
 	dao := article.NewDao(a.Api)
 	r, count := dao.List(&param)
 
-	page := response.Page(&r, count, param.PageRequest)
+	page := response.NewPage(&r, count, param.Page)
 
 	a.Success(page)
 }
@@ -35,7 +35,7 @@ func (a Article) Create(c *gin.Context) {
 	defer a.ErrorHandler()
 	a.Init(c)
 
-	param := request.CreateArticleRequest{}
+	param := request.CreateArticle{}
 	err := c.BindJSON(&param)
 	if err != nil {
 		a.ClientError(err)
@@ -50,7 +50,7 @@ func (a Article) Delete(c *gin.Context) {
 	defer a.ErrorHandler()
 	a.Init(c)
 
-	param := request.IdRequest{}
+	param := request.Id{}
 	err := c.ShouldBindUri(&param)
 	if err != nil {
 		a.ClientError(err)
@@ -67,7 +67,7 @@ func (a Article) Update(c *gin.Context) {
 	defer a.ErrorHandler()
 	a.Init(c)
 
-	param := request.UpdateArticleRequest{}
+	param := request.UpdateArticle{}
 	err := c.BindJSON(&param)
 	if err != nil {
 		a.ClientError(err)

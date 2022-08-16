@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type ListArticleResponse struct {
+type ListArticle struct {
 	Id         int32
 	Title      string
 	Content    string
