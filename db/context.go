@@ -1,7 +1,8 @@
-package context
+package db
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	logger2 "go-start/core/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -12,8 +13,8 @@ import (
 	"time"
 )
 
-var Db *gorm.DB = nil
-var Log *logger2.Log
+var _db *gorm.DB = nil
+var _log logger.Interface
 
 func InitDb() {
 	newLogger := logger.New(
@@ -26,7 +27,7 @@ func InitDb() {
 		},
 	)
 
-	Log = logger2.NewLog(newLogger)
+	_log = newLogger
 
 	dsn := "root:123456@tcp(127.0.0.1:3306)/go_start?charset=utf8mb4&parseTime=True&loc=Local"
 	dbGet, err := gorm.Open(mysql.Open(dsn), &gorm.Config{Logger: newLogger, NamingStrategy: schema.NamingStrategy{
@@ -36,5 +37,14 @@ func InitDb() {
 		fmt.Println("connect mysql bizerror")
 		panic(err)
 	}
-	Db = dbGet
+	_db = dbGet
+}
+
+func NewDBClient(ctx *gin.Context) *gorm.DB {
+	db := _db
+	return db.WithContext(ctx)
+}
+
+func NewLog() *logger2.Log {
+	return logger2.NewLog(_log)
 }

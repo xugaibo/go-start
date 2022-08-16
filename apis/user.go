@@ -4,18 +4,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-start/bos"
 	"go-start/core"
-	"go-start/db/models"
+	"go-start/db/user"
 	"go-start/models/request"
 )
 
 type User struct {
 	core.Api
-	dao models.User
 }
 
 func (u User) Create(c *gin.Context) {
 	defer u.ErrorHandler()
-	u.MakeContext(c)
+	u.Init(c)
 
 	param := request.CreateUserRequest{}
 	err := c.BindJSON(&param)
@@ -24,8 +23,9 @@ func (u User) Create(c *gin.Context) {
 		return
 	}
 
-	userFindByName := u.dao.GetByUserName(param.UserName)
+	dao := user.NewDao(u.Api)
+	userFindByName := dao.GetByUserName(param.UserName)
 	bo := bos.UserBo{UserName: param.UserName, UserPhone: param.UserPhone, Password: param.Password, UserFindByName: userFindByName}
 
-	u.Success(u.dao.Create(bo.NewUser()))
+	u.Success(dao.Create(bo.NewUser()))
 }

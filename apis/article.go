@@ -3,19 +3,18 @@ package apis
 import (
 	"github.com/gin-gonic/gin"
 	"go-start/core"
-	"go-start/db/models"
+	"go-start/db/article"
 	"go-start/models/request"
 	"go-start/models/response"
 )
 
 type Article struct {
 	core.Api
-	dao models.Article
 }
 
 func (a Article) List(c *gin.Context) {
 	defer a.ErrorHandler()
-	a.MakeContext(c)
+	a.Init(c)
 
 	param := request.ListArticleRequest{}
 	err := c.ShouldBind(&param)
@@ -24,7 +23,8 @@ func (a Article) List(c *gin.Context) {
 		return
 	}
 
-	r, count := a.dao.List(&param)
+	dao := article.NewDao(a.Api)
+	r, count := dao.List(&param)
 
 	page := response.Page(&r, count, param.PageRequest)
 
@@ -33,7 +33,7 @@ func (a Article) List(c *gin.Context) {
 
 func (a Article) Create(c *gin.Context) {
 	defer a.ErrorHandler()
-	a.MakeContext(c)
+	a.Init(c)
 
 	param := request.CreateArticleRequest{}
 	err := c.BindJSON(&param)
@@ -42,12 +42,13 @@ func (a Article) Create(c *gin.Context) {
 		return
 	}
 
-	a.Success(a.dao.Create(param))
+	dao := article.NewDao(a.Api)
+	a.Success(dao.Create(param))
 }
 
 func (a Article) Delete(c *gin.Context) {
 	defer a.ErrorHandler()
-	a.MakeContext(c)
+	a.Init(c)
 
 	param := request.IdRequest{}
 	err := c.ShouldBindUri(&param)
@@ -56,14 +57,15 @@ func (a Article) Delete(c *gin.Context) {
 		return
 	}
 
-	a.dao.Delete(param.Id)
+	dao := article.NewDao(a.Api)
+	dao.Delete(param.Id)
 
 	a.Ok()
 }
 
 func (a Article) Update(c *gin.Context) {
 	defer a.ErrorHandler()
-	a.MakeContext(c)
+	a.Init(c)
 
 	param := request.UpdateArticleRequest{}
 	err := c.BindJSON(&param)
@@ -72,7 +74,8 @@ func (a Article) Update(c *gin.Context) {
 		return
 	}
 
-	a.dao.Update(param)
+	dao := article.NewDao(a.Api)
+	dao.Update(param)
 
 	a.Ok()
 }

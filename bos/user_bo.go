@@ -5,17 +5,17 @@ import (
 	"go-start/core/bizerror"
 	"go-start/core/jwtutil"
 	"go-start/core/util"
-	"go-start/db/models"
+	"go-start/db/user"
 )
 
 type UserBo struct {
 	UserName       string
 	UserPhone      string
 	Password       string
-	UserFindByName *models.User
+	UserFindByName *user.User
 }
 
-func (r UserBo) NewUser() *models.User {
+func (r UserBo) NewUser() *user.User {
 	if r.UserFindByName != nil {
 		panic(bizerror.Biz(bizcode.UserNameExists))
 	}
@@ -24,9 +24,9 @@ func (r UserBo) NewUser() *models.User {
 		panic(bizerror.Biz(bizcode.PhoneInvalid))
 	}
 
-	user := models.User{UserName: r.UserName, UserPhone: r.UserPhone}
-	user.SetPassword(r.Password)
-	return &user
+	u := user.User{UserName: r.UserName, UserPhone: r.UserPhone}
+	u.SetPassword(r.Password)
+	return &u
 }
 
 func (r UserBo) Login() string {

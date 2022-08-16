@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-start/apis"
-	"go-start/core/context"
+	"go-start/db"
 	"go-start/middleware"
 )
 
 func main() {
-	context.InitDb()
+	db.InitDb()
 
 	r := gin.Default()
 	api := apis.Article{}

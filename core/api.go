@@ -5,7 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-start/core/bizcode"
 	"go-start/core/bizerror"
-	"go-start/core/context"
+	"go-start/core/logger"
+	"go-start/db"
 	"go-start/models/response"
 	"net/http"
 	"runtime"
@@ -13,6 +14,27 @@ import (
 
 type Api struct {
 	Context *gin.Context
+	Log     *logger.Log
+}
+
+func (a *Api) Init(c *gin.Context) *Api {
+	return a.makeContext(c).makeLogger()
+}
+
+func (a *Api) makeContext(c *gin.Context) *Api {
+	a.Context = c
+	return a
+}
+
+func (a *Api) makeLogger() *Api {
+	a.Log = db.NewLog()
+	return a
+}
+
+func (a *Api) MakeBaseDao(baseDao *db.BaseDao) *Api {
+	baseDao.Log = a.Log
+	baseDao.Db = db.NewDBClient(a.Context)
+	return a
 }
 
 func (a *Api) Ok() {
@@ -24,8 +46,8 @@ func (a *Api) Success(data any) {
 }
 
 func (a *Api) ClientError(err error) {
-	context.Log.Error("client error:", err)
-	context.Log.Error(getCurrentGoroutineStack())
+	a.Log.Error("client error:", err)
+	a.Log.Error(getCurrentGoroutineStack())
 	withError := response.NotOk(bizcode.ClientError.Code(), fmt.Sprint(err))
 	a.Context.AbortWithStatusJSON(http.StatusOK, withError)
 }
@@ -33,11 +55,6 @@ func (a *Api) ClientError(err error) {
 func (a *Api) Error(bizError bizerror.BizError) {
 	withError := response.NotOk(bizError.Code, bizError.Error())
 	a.Context.AbortWithStatusJSON(http.StatusOK, withError)
-}
-
-func (a *Api) MakeContext(c *gin.Context) *Api {
-	a.Context = c
-	return a
 }
 
 func getCurrentGoroutineStack() string {
@@ -54,11 +71,11 @@ func (a *Api) ErrorHandler() {
 				a.Error(bizerror.Wrap(jsonErr))
 			}
 
-			context.Log.Error("biz error", err)
+			a.Log.Error("biz error", err)
 			a.Error(*bizError)
 		} else if _, ok := err.(error); ok {
-			context.Log.Error("server error:", err)
-			context.Log.Error(getCurrentGoroutineStack())
+			a.Log.Error("server error:", err)
+			a.Log.Error(getCurrentGoroutineStack())
 
 			a.Error(bizerror.Biz(bizcode.ServerError))
 		}
