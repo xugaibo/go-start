@@ -24,15 +24,22 @@ func NewDao(api core.Api) *Dao {
 func (d *Dao) List(req *request.ListArticleRequest) ([]Article, int64) {
 	var result []Article
 
-	query := d.Db.Model(Article{})
-	if req.Id > 0 {
+	query := d.Db.Debug().Model(Article{})
+	query.Where("is_delete = ? ", enums.No.Code())
+
+	if req.Id != nil {
 		query.Where("id = ?", req.Id)
 	}
-	query.Where("is_delete = ? ", enums.No.Code())
+	if req.Start != nil {
+		query.Where("created_at >= ", req.Start)
+	}
+	if req.End != nil {
+		query.Where("updated_at <=", req.End)
+	}
 
 	var count int64
 	query.Count(&count)
-	err := query.Limit(req.PageSize).Offset(req.Offset()).Order("id").Find(&result).Error
+	err := query.Limit(req.PageSize).Offset(req.Offset()).Order("created_at desc").Find(&result).Error
 	if err != nil {
 		panic(err)
 	}

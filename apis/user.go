@@ -25,7 +25,7 @@ func (u User) Create(c *gin.Context) {
 
 	dao := user.NewDao(u.Api)
 	userFindByName := dao.GetByUserName(param.UserName)
-	bo := bos.UserBo{UserName: param.UserName, UserPhone: param.UserPhone, Password: param.Password, UserFindByName: userFindByName}
+	bo := bos.UserBo{UserName: param.UserName, UserPhone: param.UserPhone, Password: param.Password, User: userFindByName}
 
 	u.Success(dao.Create(bo.NewUser()))
 }

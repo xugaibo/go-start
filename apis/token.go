@@ -25,7 +25,7 @@ func (t Token) Create(c *gin.Context) {
 
 	dao := user.NewDao(t.Api)
 	userFindByName := dao.GetByUserName(param.UserName)
-	bo := bos.UserBo{UserName: param.UserName, Password: param.Password, UserFindByName: userFindByName}
+	bo := bos.UserBo{UserName: param.UserName, Password: param.Password, User: userFindByName}
 	m := map[string]string{
 		"token": bo.Login(),
 	}

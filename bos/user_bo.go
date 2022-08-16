@@ -9,14 +9,14 @@ import (
 )
 
 type UserBo struct {
-	UserName       string
-	UserPhone      string
-	Password       string
-	UserFindByName *user.User
+	UserName  string
+	UserPhone string
+	Password  string
+	User      *user.User
 }
 
 func (r UserBo) NewUser() *user.User {
-	if r.UserFindByName != nil {
+	if r.User != nil {
 		panic(bizerror.Biz(bizcode.UserNameExists))
 	}
 
@@ -30,15 +30,15 @@ func (r UserBo) NewUser() *user.User {
 }
 
 func (r UserBo) Login() string {
-	if r.UserFindByName == nil {
+	if r.User == nil {
 		panic(bizerror.Biz(bizcode.UserNotExists))
 	}
 
-	if !r.UserFindByName.CheckPassword(r.Password) {
+	if !r.User.CheckPassword(r.Password) {
 		panic(bizerror.Biz(bizcode.PasswordInvalid))
 	}
 
-	token, err := jwtutil.GenerateToken(r.UserFindByName.UserId, r.UserName)
+	token, err := jwtutil.GenerateToken(r.User.UserId, r.UserName)
 	if err != nil {
 		panic(err)
 	}
