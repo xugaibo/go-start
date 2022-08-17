@@ -8,8 +8,10 @@ const (
 	ClientError  BizCode = 400
 	DataNotfound BizCode = 4040
 
-	TokenInvalid BizCode = 10001
-	TokenExpire  BizCode = 10002
+	TokenInvalid        BizCode = 10001
+	TokenExpire         BizCode = 10002
+	RefreshTokenInvalid BizCode = 10003
+	RefreshTokenExpire  BizCode = 10004
 
 	UserNameExists  BizCode = 20001
 	PhoneInvalid    BizCode = 20002
@@ -18,16 +20,18 @@ const (
 )
 
 var kv = map[BizCode]string{
-	Success:         "success",
-	ServerError:     "server error",
-	ClientError:     "client error",
-	DataNotfound:    "data not found error",
-	TokenInvalid:    "token invalid",
-	TokenExpire:     "token expire",
-	UserNameExists:  "user name exists",
-	PhoneInvalid:    "phone invalid",
-	UserNotExists:   "user not exists",
-	PasswordInvalid: "password invalid",
+	Success:             "success",
+	ServerError:         "server error",
+	ClientError:         "client error",
+	DataNotfound:        "data not found error",
+	TokenInvalid:        "token invalid",
+	TokenExpire:         "token expire",
+	RefreshTokenInvalid: "refresh token invalid",
+	RefreshTokenExpire:  "refresh token expire",
+	UserNameExists:      "user name exists",
+	PhoneInvalid:        "phone invalid",
+	UserNotExists:       "user not exists",
+	PasswordInvalid:     "password invalid",
 }
 
 func (b BizCode) String() string {

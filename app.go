@@ -19,6 +19,7 @@ func main() {
 
 	token := apis.Token{}
 	r.POST("/token", token.Create)
+	r.PUT("/token", token.Update)
 
 	r2 := r.Group("/")
 	r2.Use(middleware.CheckLogin())

@@ -4,6 +4,7 @@ import (
 	"go-start/core/bizcode"
 	"go-start/core/bizerror"
 	"go-start/core/jwtutil"
+	"go-start/core/jwtutil/refreshtoken"
 	"go-start/core/util"
 	"go-start/db/user"
 )
@@ -29,7 +30,7 @@ func (r UserBo) NewUser() *user.User {
 	return &u
 }
 
-func (r UserBo) Login() string {
+func (r UserBo) Login() (string, string) {
 	if r.User == nil {
 		panic(bizerror.Biz(bizcode.UserNotExists))
 	}
@@ -42,5 +43,11 @@ func (r UserBo) Login() string {
 	if err != nil {
 		panic(err)
 	}
-	return token
+
+	refreshToken, err := refreshtoken.Generate(token)
+	if err != nil {
+		panic(err)
+	}
+
+	return token, refreshToken
 }
